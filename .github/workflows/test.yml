@@ -1,0 +1,22 @@
+name: test-crexi-runner
+run-name: test-crexi-runner
+# Controls when the workflow will run
+on: 
+   push:
+    branches:
+      - 'crexi-runner-test'
+   workflow_dispatch:
+jobs:
+  run:
+
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - run: npm config set legacy-peer-deps true  
+      - run: npm install 
+      - run: s3cmd sync /home/cibao/zillow-output/ s3://zillow-output
